@@ -1,4 +1,4 @@
-package com.example.budgetingapp.db
+package com.example.budgetingapp.data
 
 import androidx.room.Entity
 import androidx.room.ForeignKey

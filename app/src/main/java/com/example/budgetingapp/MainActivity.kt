@@ -9,16 +9,15 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-
 import androidx.navigation.compose.rememberNavController
 import com.example.budgetingapp.navigation.Budget
 import com.example.budgetingapp.navigation.Home
 import com.example.budgetingapp.screens.BudgetingScreen
+import com.example.budgetingapp.screens.viewModel.BudgetingViewModel
 import com.example.budgetingapp.screens.UserScreen
 import com.example.budgetingapp.ui.theme.BudgetingAppTheme
 
@@ -26,12 +25,13 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            BudgetApp()
+            val vm = BudgetingViewModel()
+            BudgetApp(vm = vm)
         }
     }
 
     @Composable
-    fun BudgetApp() {
+    fun BudgetApp(vm: BudgetingViewModel) {
         BudgetingAppTheme {
             val navController = rememberNavController()
             val currentBackStack by navController.currentBackStackEntryAsState()

@@ -50,7 +50,9 @@ fun UserScreen(
             modifier = Modifier.fillMaxWidth()
         )
         
-        Button(onClick = onNextClick) {
+        Button(
+            onClick = onNextClick,
+            ) {
             Text(text = "Next")
         }
     }

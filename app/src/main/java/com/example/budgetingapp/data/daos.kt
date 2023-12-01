@@ -1,4 +1,4 @@
-package com.example.budgetingapp.db
+package com.example.budgetingapp.data
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -26,7 +26,7 @@ interface ExpenseDao {
 @Dao
 interface UserDao {
     @Query("SELECT name FROM users")
-    suspend fun getName(name: String)
+    suspend fun getExistingNames()
 
     @Insert(User::class)
     suspend fun createUser(name: String)
