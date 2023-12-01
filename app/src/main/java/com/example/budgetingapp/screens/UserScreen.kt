@@ -22,7 +22,9 @@ import androidx.compose.ui.unit.sp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UserScreen() {
+fun UserScreen(
+    onNextClick: () -> Unit = {}
+) {
     var name by remember { mutableStateOf("") }
 
     Column(
@@ -48,7 +50,7 @@ fun UserScreen() {
             modifier = Modifier.fillMaxWidth()
         )
         
-        Button(onClick = { /*TODO*/ }) {
+        Button(onClick = onNextClick) {
             Text(text = "Next")
         }
     }
