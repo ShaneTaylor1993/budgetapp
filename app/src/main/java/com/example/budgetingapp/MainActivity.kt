@@ -1,5 +1,6 @@
 package com.example.budgetingapp
 
+import android.app.Application
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -17,57 +18,61 @@ import androidx.navigation.compose.rememberNavController
 import com.example.budgetingapp.navigation.Budget
 import com.example.budgetingapp.navigation.Home
 import com.example.budgetingapp.screens.BudgetingScreen
-import com.example.budgetingapp.screens.viewModel.BudgetingViewModel
 import com.example.budgetingapp.screens.UserScreen
 import com.example.budgetingapp.ui.theme.BudgetingAppTheme
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.HiltAndroidApp
 
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            val vm = BudgetingViewModel()
-            BudgetApp(vm = vm)
-        }
-    }
+@HiltAndroidApp
+class BudgetApplication : Application() {
 
-    @Composable
-    fun BudgetApp(vm: BudgetingViewModel) {
-        BudgetingAppTheme {
-            val navController = rememberNavController()
-            val currentBackStack by navController.currentBackStackEntryAsState()
-            val currentDestination = currentBackStack?.destination
-            // A surface container using the 'background' color from the theme
-            Surface(
-                modifier = Modifier.fillMaxSize(),
-                color = MaterialTheme.colorScheme.background
-            ) {
-                AppNavHost(navController = navController)
+    @AndroidEntryPoint
+    class MainActivity() : ComponentActivity() {
+        override fun onCreate(savedInstanceState: Bundle?) {
+            super.onCreate(savedInstanceState)
+            setContent {
+                BudgetApp()
             }
         }
-    }
 
-    @Composable
-    fun AppNavHost(navController: NavHostController) {
-        NavHost(
-            navController = navController,
-            startDestination = Home.route)
-         {
-            composable(route = Home.route) {
-                UserScreen(
-                    onNextClick = {
-                        navController.navigateSingleTopTo(Budget.route)
-                    }
-                )
+        @Composable
+        fun BudgetApp() {
+            BudgetingAppTheme {
+                val navController = rememberNavController()
+                val currentBackStack by navController.currentBackStackEntryAsState()
+                val currentDestination = currentBackStack?.destination
+                // A surface container using the 'background' color from the theme
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    AppNavHost(navController = navController)
+                }
             }
-             composable(route = Budget.route) {
-                 BudgetingScreen()
-             }
+        }
+
+        @Composable
+        fun AppNavHost(navController: NavHostController) {
+            NavHost(
+                navController = navController,
+                startDestination = Home.route)
+            {
+                composable(route = Home.route) {
+                    UserScreen(
+                        onNextClick = {
+                            navController.navigateSingleTopTo(Budget.route)
+                        }
+                    )
+                }
+                composable(route = Budget.route) {
+                    BudgetingScreen()
+                }
+
+            }
 
         }
 
     }
-
 }
-
 fun NavHostController.navigateSingleTopTo(route: String) =
     this.navigate(route) { launchSingleTop = true }

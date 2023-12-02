@@ -1,8 +1,10 @@
-
+import com.android.build.gradle.tasks.detectAnnotationProcessors
 
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id ("com.google.dagger.hilt.android")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -55,11 +57,16 @@ dependencies {
 
     val roomVersion = "2.6.1"
     val navVersion = "2.7.5"
+    val kaptVersion = 2.49
+    val hiltVersion = 2.49
+
+    implementation("com.google.dagger:hilt-android:$hiltVersion")
+    ksp("com.google.dagger:hilt-android-compiler:$kaptVersion")
 
     implementation("androidx.navigation:navigation-compose:$navVersion")
 
     implementation("androidx.room:room-runtime:$roomVersion")
-    annotationProcessor("androidx.room:room-compiler:$roomVersion")
+    ksp("androidx.room:room-compiler:$roomVersion")
 
     implementation("com.google.devtools.ksp:symbol-processing-api:1.9.21-1.0.15")
     implementation("androidx.room:room-ktx:$roomVersion")

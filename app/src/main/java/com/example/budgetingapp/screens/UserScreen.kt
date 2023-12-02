@@ -51,7 +51,10 @@ fun UserScreen(
         )
         
         Button(
-            onClick = onNextClick,
+            onClick = {
+                onNextClick
+
+                      },
             ) {
             Text(text = "Next")
         }
