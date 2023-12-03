@@ -22,5 +22,6 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "users")
 data class User(
     @PrimaryKey val name: String,
-    @ColumnInfo(name = "first_name") val firstName: String?
+    @ColumnInfo(name = "age") val age: Int? = null,
+    @ColumnInfo(name = "favorite_color") val favColor: String? = null
 )

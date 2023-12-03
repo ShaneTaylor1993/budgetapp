@@ -11,3 +11,7 @@ object Home : Destinations {
 object Budget : Destinations {
     override val route = "budget"
 }
+
+object UserInfo : Destinations {
+    override val route = "user_info/{name}"
+}

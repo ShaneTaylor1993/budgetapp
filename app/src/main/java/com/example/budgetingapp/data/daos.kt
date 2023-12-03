@@ -1,5 +1,6 @@
 package com.example.budgetingapp.data
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Ignore
 import androidx.room.Insert
@@ -26,8 +27,11 @@ import androidx.room.Query
 
 @Dao
 interface UserDao {
-//    @Query("SELECT name FROM users")
-//    suspend fun getExistingNames()
+    @Query("SELECT * FROM users WHERE name = :name")
+    suspend fun getUserInfo(name: String): User
+
+    @Query("SELECT name FROM users WHERE name = :name")
+    suspend fun getUserName(name: String): List<String>
 
     @Insert(User::class)
     suspend fun createUser(user: User)
