@@ -6,6 +6,7 @@ import androidx.room.Ignore
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 
 //@Dao
 //interface IncomeDao {
@@ -28,10 +29,10 @@ import androidx.room.Query
 @Dao
 interface UserDao {
     @Query("SELECT * FROM users WHERE name = :name")
-    suspend fun getUserInfo(name: String): User
+    fun getUserInfo(name: String): Flow<User>
 
-    @Query("SELECT name FROM users WHERE name = :name")
-    suspend fun getUserName(name: String): List<String>
+    @Query("SELECT * FROM users WHERE name = :name")
+    fun getUser(name: String): Flow<User>
 
     @Insert(User::class)
     suspend fun createUser(user: User)

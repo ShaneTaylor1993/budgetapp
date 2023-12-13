@@ -23,6 +23,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.budgetingapp.data.User
+import com.example.budgetingapp.data.UserEvent
 import com.example.budgetingapp.screens.viewModel.UserViewModel
 
 
@@ -60,8 +62,9 @@ fun UserScreen(
         Button(
             onClick = {
                 onNextClick()
-                vm.getUserInfo(name)
-            }
+                vm.getUser(name)
+            },
+            enabled = name.isNotEmpty()
             ) {
             Text(text = "Next")
         }
@@ -118,7 +121,6 @@ fun NewUserInfo(
     Button(
         onClick = {
             vm.createNewUser(newUser, age.toInt(), favColor)
-            onNextClick()
         },
         enabled = newUser.isNotEmpty()
     ) {
