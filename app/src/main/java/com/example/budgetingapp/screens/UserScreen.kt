@@ -31,9 +31,10 @@ import com.example.budgetingapp.screens.viewModel.UserViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UserScreen(
-    onNextClick: () -> Unit = {}
+    onNextClick: () -> Unit = {},
+    getUser: (String) -> Unit,
+    createUser: (String, Int?, String?) -> Unit
 ) {
-    val vm: UserViewModel = hiltViewModel()
     var name by remember { mutableStateOf("") }
 
     Column(
@@ -62,7 +63,7 @@ fun UserScreen(
         Button(
             onClick = {
                 onNextClick()
-                vm.getUser(name)
+                getUser(name)
             },
             enabled = name.isNotEmpty()
             ) {
@@ -71,7 +72,7 @@ fun UserScreen(
 
         NewUserInfo(
             onNextClick,
-            vm
+            createUser
         )
     }
 }
@@ -80,7 +81,7 @@ fun UserScreen(
 @Composable
 fun NewUserInfo(
     onNextClick: () -> Unit,
-   vm: UserViewModel
+    createUser: (String, Int?, String?) -> Unit
     ) {
 
     var newUser by remember { mutableStateOf("") }
@@ -120,7 +121,7 @@ fun NewUserInfo(
 
     Button(
         onClick = {
-            vm.createNewUser(newUser, age.toInt(), favColor)
+            createUser(newUser, age.toInt(), favColor)
         },
         enabled = newUser.isNotEmpty()
     ) {
